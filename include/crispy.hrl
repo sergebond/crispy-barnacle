@@ -1,9 +1,12 @@
-%%%-------------------------------------------------------------------
-%%% @author srg
-%%% @copyright (C) 2017, <COMPANY>
-%%% @doc
-%%%
-%%% @end
-%%% Created : 09. Март 2017 11:41
-%%%-------------------------------------------------------------------
 -author("srg").
+
+-define(APP_NAME, crispy).
+-define(TABLE_CONTACTS, contacts).
+
+-record(contact, {
+  id,
+  name,
+  surname,
+  phone,
+  description
+}).
