@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<h1>Hello backbone!</h1>
+
+	<script src="js/underscore.js"></script>
+	<script src="js/jquery.js"></script>
+	<script src="js/backbone.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/models.js"></script>
+	<script src="js/collections.js"></script>
+	<script src="js/views.js"></script>
+	<script src="js/router.js"></script>
+
+	<script> 
+		new App.Router();
+		Backbone.history.start();
+
+		App.contacts = new App.Collections.Сontacts();
+
+		App.contacts.fetch().then(function() {
+
+			new App.Views.App({ collection: App.сontacts 
+			});
+
+		})
+	</script>
+
+</head>
+<body>
+	
+</body>
+</html>
