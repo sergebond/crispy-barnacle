@@ -4,7 +4,8 @@
 
 %% API
 -export([
-  get/0,
+  init/0,
+  get/1,
   create/1,
   update/1,
   delete/1
@@ -12,10 +13,18 @@
 
 init() ->
   ok = counter:create(id),
-  ok = ets:new(?TABLE_CONTACTS, [set, named_table, {keypos,2}]).
+  ets:new(?TABLE_CONTACTS, [set, named_table]).
 
-get(Id) -> ok.
-create(Contact) -> ok.
-update(Contact) -> ok.
-delete(Contact) -> ok.
+get(all) ->
+  ets:select(?TABLE_CONTACTS, [{'$1',[],['$1']}]);
+get(Id) ->
+  ets:lookup(?TABLE_CONTACTS, Id).
 
+create(Contact) ->
+  ets:insert(?TABLE_CONTACTS, Contact).
+
+update(Contact) ->
+  ets:insert(?TABLE_CONTACTS, Contact).
+
+delete(Id) ->
+  ets:delete(?TABLE_CONTACTS, Id).

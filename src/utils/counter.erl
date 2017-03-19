@@ -19,8 +19,8 @@ prev(CounterName) ->
 set(CounterName, Value) ->
   case ets:info(?COUNTERS_TABLE) of
     undefined ->
-      ets:new(?COUNTERS_TABLE, [set, public]),
-      io:format("~p Ets inited");
+      ets:new(?COUNTERS_TABLE, [set, named_table, public]),
+      io:format("Ets inited");
     _ -> ok
   end,
   true = ets:insert(?COUNTERS_TABLE, {CounterName, Value}),

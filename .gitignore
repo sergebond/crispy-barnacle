@@ -13,3 +13,5 @@ rel/example_project
 .rebar
 /erlang.mk
 /_rel/
+/logs/
+Будет удалено logs/

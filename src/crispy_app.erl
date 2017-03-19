@@ -6,6 +6,7 @@
 -export([stop/1]).
 
 start(_Type, _Args) ->
+  contacts:init(),
   Dispatch = cowboy_router:compile([
     {'_', [
       {"/", cowboy_static, {priv_file, ?APP_NAME, "index.html"}},

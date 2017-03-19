@@ -30,10 +30,15 @@ handle(Req, State=#state{}) ->
 terminate(_Reason, _Req, _State) ->
   ok.
 
-handle_command(<<"GET">>, _PathInfo, _Body) -> {ok, []};
-handle_command(<<"POST">>, _PathInfo, _Body) -> {ok, []};
-handle_command(<<"PUT">>, _PathInfo, _Body) -> {ok, []};
-handle_command(<<"DELETE">>, _PathInfo, _Body) -> {ok, []};
+handle_command(<<"GET">>, _PathInfo, Data) ->
+  lager:info("Data has come"),
+  {ok, []};
+handle_command(<<"POST">>, _PathInfo, Data) ->
+  {ok, []};
+handle_command(<<"PUT">>, _PathInfo, Data) ->
+  {ok, []};
+handle_command(<<"DELETE">>, _PathInfo, _Body) ->
+  {ok, []};
 
 handle_command(_Method, _PathInfo, _Body) ->
   {error, <<"Unknown method">>}.
