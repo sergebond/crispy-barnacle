@@ -6,7 +6,7 @@ PROJECT_VERSION = 0.1.0
 SP = 2
 
 # deps
-DEPS = cowboy jiffy lager edata etest_http
+DEPS = cowboy jiffy lager edata etest_http edata
 
 
 # deps urls
@@ -16,6 +16,7 @@ dep_jiffy = git git@github.com:davisp/jiffy.git
 dep_lager = git git@github.com:erlang-lager/lager.git
 dep_edata = git https://github.com/sergebond/edata.git
 dep_etest_http = git git@github.com:wooga/etest_http.git
+dep_edata = git https://github.com/sergebond/edata.git
 
 # Compiler options.
 ERLC_OPTS ?= -W1

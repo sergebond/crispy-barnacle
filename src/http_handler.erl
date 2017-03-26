@@ -16,7 +16,7 @@ handle(Req, State=#state{}) ->
   {Method, Req2} = cowboy_req:method(Req1),
   {ok, Body, Req3} = cowboy_req:body(Req2),
   {Code, Response} =
-    try handle_command(Method, PathInfo, utils:from_json(Body)) of
+    try handle_command(Method, PathInfo, Body) of
       {ok, Resp} when is_list(Resp) ->
         {200, Resp}
     catch
@@ -34,6 +34,9 @@ terminate(_Reason, _Req, _State) ->
 
 handle_command(<<"GET">>, _PathInfo, _Data) ->
 %%  lager:log("Data has come"),
+
+  io:format("Data has come"),
+
   {ok, []};
 handle_command(<<"POST">>, _PathInfo, _Data) ->
   {ok, []};
