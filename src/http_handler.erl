@@ -22,20 +22,22 @@ handle(Req, State=#state{}) ->
     catch
       {error, Reas} ->
         {500, Reas};
-      SomethingElse -> lager:error("Error ~p" , [SomethingElse])
+      SomethingElse ->
+        io:format(" ~n Error ~p" , [SomethingElse])
     end,
+  io:format("~p Response",[Response]),
   {ok, Req4} = cowboy_req:reply(Code, [], utils:to_json(Response), Req3),
   {ok, Req4, State}.
 
 terminate(_Reason, _Req, _State) ->
   ok.
 
-handle_command(<<"GET">>, _PathInfo, Data) ->
-  lager:info("Data has come"),
+handle_command(<<"GET">>, _PathInfo, _Data) ->
+%%  lager:log("Data has come"),
   {ok, []};
-handle_command(<<"POST">>, _PathInfo, Data) ->
+handle_command(<<"POST">>, _PathInfo, _Data) ->
   {ok, []};
-handle_command(<<"PUT">>, _PathInfo, Data) ->
+handle_command(<<"PUT">>, _PathInfo, _Data) ->
   {ok, []};
 handle_command(<<"DELETE">>, _PathInfo, _Body) ->
   {ok, []};

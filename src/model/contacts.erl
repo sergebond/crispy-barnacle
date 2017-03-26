@@ -12,8 +12,9 @@
 ]).
 
 init() ->
-  ok = counter:create(id),
-  ets:new(?TABLE_CONTACTS, [set, named_table]).
+  0 = counter:create(id),
+  ?TABLE_CONTACTS = ets:new(?TABLE_CONTACTS, [set, named_table]),
+  ok.
 
 get(all) ->
   ets:select(?TABLE_CONTACTS, [{'$1',[],['$1']}]);

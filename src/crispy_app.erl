@@ -6,10 +6,12 @@
 -export([stop/1]).
 
 start(_Type, _Args) ->
-  contacts:init(),
+%%  ok = application:ensure_started(lager),
+  ok = contacts:init(),
+
   Dispatch = cowboy_router:compile([
     {'_', [
-      {"/", cowboy_static, {priv_file, ?APP_NAME, "index.html"}},
+      {"/", http_handler, []},
       {"/static/[...]", cowboy_static, {priv_dir, ?APP_NAME, "",
         [{mimetypes, cow_mimetypes, all}]}}
     ]}
@@ -19,7 +21,7 @@ start(_Type, _Args) ->
     {env, [{dispatch, Dispatch}]}
   ]),
 
-  lager:info("Handlers started"),
+  io:format("_____________Handlers started"),
 
   crispy_sup:start_link().
 

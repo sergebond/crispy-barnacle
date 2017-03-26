@@ -12,6 +12,8 @@
 -include("crispy.hrl").
 
 -define(URL, "http://127.0.0.1:8080").
+-define(COUNTER, q1).
+
 %%--------------------------------------------------------------------
 %% COMMON TEST CALLBACK FUNCTIONS
 %%--------------------------------------------------------------------
@@ -19,8 +21,9 @@ suite() ->
   [{timetrap, {minutes, 10}}].
 
 init_per_suite(Config) ->
-  inets:start(),
-  application:ensure_all_started(?APP_NAME),
+  ok = inets:start(),
+  {ok, _Apps} = application:ensure_all_started(?APP_NAME),
+%%  ct:pal("Response ~p", [Term]),
   Config.
 
 end_per_suite(_Config) ->
@@ -39,17 +42,35 @@ end_per_testcase(_TestCase, _Config) ->
   ok.
 
 groups() ->
-  [].
+  [
+    {general,
+      [sequence], [
+      test_counter
+    ]},
+    {http,
+      [sequence], [
+      test_get_all
+%%      test_get,
+%%      test_create,
+%%      test_update,
+%%      test_delete
+      ]}
+  ].
 
 all() ->
-  [test_get_all].
+  [
+    {group, general},
+    {group, http}
+  ].
 %%--------------------------------------------------------------------
 %% COMMON TEST CASES
 %%--------------------------------------------------------------------
 test_get_all(Config) ->
-  Result = ?perform_get(?URL),
+  Result = #etest_http_res{body = Body, status = Status} = ?perform_get(?URL),
+  ct:pal("Body is ~p~nStatus is ~p", [Body, Status]),
   ?assert_status(200, Result),
   Config.
+
 test_get(Config) ->
   Result = ?perform_get(?URL),
   ?assert_status(200, Result),
@@ -60,4 +81,18 @@ test_create(Config) ->
 test_update(Config) ->
   Config.
 test_delete(Config) ->
+  Config.
+
+test_counter(Config) ->
+  ?assert_equal(counter:create(?COUNTER),0),
+  ?assert_equal(counter:get(?COUNTER), 0),
+  ?assert_equal(counter:next(?COUNTER), 1),
+  ?assert_equal(counter:next(?COUNTER), 2),
+  ?assert_equal(counter:prev(?COUNTER), 1),
+  ?assert_equal(counter:get(?COUNTER), 1),
+  ?assert_equal(counter:update(?COUNTER, 10), 11),
+  ?assert_equal(counter:get(?COUNTER), 11),
+  ?assert_equal(counter:set(?COUNTER, 9999), 9999),
+  ?assert_equal(counter:get(?COUNTER), 9999),
+  ct:pal("test_counter is ok"),
   Config.
